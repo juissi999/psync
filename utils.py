@@ -1,5 +1,6 @@
 import os
 import hashlib
+import shutil
 
 
 def find_files_in_folderstructure(folder):
@@ -25,3 +26,10 @@ def find_files_in_folderstructure(folder):
         files_found = files_found + find_files_in_folderstructure(os.path.join(folder, filename))
 
     return files_found
+
+
+def copy_files(files_to_copy, inputdir, outputdir):
+    for f in files_to_copy:
+        source_file = os.path.join(f[0], f[1])
+        dest_file = os.path.join(outputdir, f[1])
+        shutil.copyfile(source_file, dest_file) #, follow_symlinks=False
