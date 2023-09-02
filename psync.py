@@ -13,12 +13,13 @@ args = parser.parse_args()
 print("Input directory: " + args.inputdir)
 print("Output directory: " + args.outputdir)
 
-files_in_inputdirectory = []
-files_in_outputdirectory = []
 
-find_files_in_folderstructure(args.inputdir, files_in_inputdirectory)
+files_in_inputdirectory = find_files_in_folderstructure(args.inputdir)
+files_in_outputdirectory = find_files_in_folderstructure(args.outputdir)
 
 filenames_in_inputdir = [x[1] for x in files_in_inputdirectory]
+filenames_in_outputdir = [x[1] for x in files_in_outputdirectory]
 
+print(filenames_in_inputdir)
 print(filenames_in_inputdir)
 
