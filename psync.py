@@ -2,6 +2,30 @@ import argparse
 
 from utils import find_files_in_folderstructure, copy_files
 
+
+def find_intersecting_hashes(files_in_inputdirectory, files_in_outputdirectory, verbose):
+
+  hashes_in_inputdir = [x[2] for x in files_in_inputdirectory]
+  hashes_in_outputdir = {x[2] for x in files_in_outputdirectory}
+
+  intersecting_hashes = []
+  non_intersecting_hashes = []
+  for index, hashvalue in enumerate(hashes_in_inputdir):
+      if (hashvalue in hashes_in_outputdir):
+          intersecting_hashes.append(index)
+      else:
+          non_intersecting_hashes.append(index)
+
+  if len(intersecting_hashes) > 0:
+      print("Some files in the input directory seem to exist in the output directory already.")
+
+      if verbose:
+        print("Files:")
+        print([filenames_in_inputdir[index] for index in intersecting_hashes])
+
+  return intersecting_hashes, non_intersecting_hashes 
+
+
 parser = argparse.ArgumentParser("simple_example")
 
 parser.add_argument("inputdir", help="Input directory.", type=str)
@@ -25,30 +49,13 @@ filenames_in_outputdir = [x[1] for x in files_in_outputdirectory]
 print("Input directory: " + args.inputdir + " (" + str(len(filenames_in_inputdir)) + " files)")
 print("Output directory: " + args.outputdir + " (" + str(len(filenames_in_outputdir)) + " files)")
 
-
 if args.verbose:
   print("FILES IN INPUT-DIR:")
   print(filenames_in_inputdir)
   print("FILES IN OUTPUT-DIR:")
   print(filenames_in_outputdir)
 
-hashes_in_inputdir = [x[2] for x in files_in_inputdirectory]
-hashes_in_outputdir = {x[2] for x in files_in_outputdirectory}
-
-intersecting_hashes = []
-non_intersecting_hashes = []
-for index, hashvalue in enumerate(hashes_in_inputdir):
-    if (hashvalue in hashes_in_outputdir):
-        intersecting_hashes.append(index)
-    else:
-        non_intersecting_hashes.append(index)
-
-if len(intersecting_hashes) > 0:
-    print("Some files in the input directory seem to exist in the output directory already.")
-
-    if args.verbose:
-      print("Files:")
-      print([filenames_in_inputdir[index] for index in intersecting_hashes])
+intersecting_hashes, non_intersecting_hashes = find_intersecting_hashes(files_in_inputdirectory, files_in_outputdirectory, args.verbose)
 
 files_to_copy = [(files_in_inputdirectory[index]) for index in non_intersecting_hashes]
 
