@@ -16,8 +16,8 @@ parser.add_argument('-s', '--sync', action='store_true')  # on/off flag
 
 args = parser.parse_args()
 
-files_in_inputdirectory = find_files_in_folderstructure(args.inputdir)
-files_in_outputdirectory = find_files_in_folderstructure(args.outputdir)
+files_in_inputdirectory = find_files_in_folderstructure([args.inputdir])
+files_in_outputdirectory = find_files_in_folderstructure([args.outputdir])
 
 filenames_in_inputdir = [x[1] for x in files_in_inputdirectory]
 filenames_in_outputdir = [x[1] for x in files_in_outputdirectory]
