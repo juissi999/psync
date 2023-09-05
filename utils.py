@@ -36,3 +36,9 @@ def copy_files(files_to_copy, inputdir, outputdir):
         source_file = os.path.join(source_folder, f[1])
         dest_file = os.path.join(outputdir, f[1])
         shutil.copyfile(source_file, dest_file) #, follow_symlinks=False
+
+def validate_parameters(inputdir, outputdir):
+
+    validations = [os.path.isdir(inputdir), os.path.isdir(outputdir)]
+    
+    return not False in validations

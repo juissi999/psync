@@ -1,6 +1,6 @@
 import argparse
 
-from utils import find_files_in_folderstructure, copy_files
+from utils import validate_parameters, find_files_in_folderstructure, copy_files
 
 
 def find_intersecting_hashes(files_in_inputdirectory, files_in_outputdirectory, verbose):
@@ -39,6 +39,12 @@ parser.add_argument('-s', '--sync', action='store_true')  # on/off flag
 # flatten source file structure
 
 args = parser.parse_args()
+
+parameters_valid = validate_parameters(args.inputdir, args.outputdir)
+
+if (not parameters_valid):
+  print("Parameters are not valid.")
+  exit()
 
 files_in_inputdirectory = find_files_in_folderstructure([args.inputdir])
 files_in_outputdirectory = find_files_in_folderstructure([args.outputdir])
